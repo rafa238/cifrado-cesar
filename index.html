@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/estilos.css"/>
+    <title>Cifrado Cesar</title>
+</head>
+<body>
+    <fieldset class="contenedor">
+        <legend>Cifrado Cesar</legend>
+        <div class="tabs">
+            <button type="button" id="cesar" class="btn btnActivo">Cesar</button>
+            <button type="button" id="cesarM" class="btn btnDesactivo">Cesar Mejorado</button>
+            <label>Desplazamiento:</label>
+            <input type="number" id="valorDesp" class="input">
+            <div id="divk">
+                <label>Ingresa el valor k:</label>
+                <input type="number" id="valork" class="input">
+            </div>
+        </div>
+
+        <div class="container">
+            <div id="principal"> 
+                <p>Texto a Cifrar / Descifrar</p>
+                <textarea id="cadena" class="input"></textarea>
+                <div class="tabs"> 
+                    <input type="button" value="Cifrar" onclick="codificar()" class="btn btnActivo" >
+                    <input type="button" value="Decifrar" onclick="decodificar()" class="btn btnActivo" > 
+                </div>
+            </div>
+            <div id="lateral" >
+                <p>Texto Cifrado</p>
+                <div id="resultado" class="input"> </div>
+            </div>
+        </div>
+    </fieldset>
+    <script src="js/logica.js" ></script>
+</body>
+</html>
