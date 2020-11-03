@@ -3,16 +3,66 @@
 window.onload = () => {
     var bt1 = document.getElementById("cesar");
     var bt2 = document.getElementById("cesarM");
-    var divk = document.getElementById("divk");
-    divk.style.display = 'none';
-    bt1.addEventListener('click', () =>{bt1.className = "btn btnActivo"; bt2.className = "btn btnDesactivo"; divk.style.display = "none"});
-    bt2.addEventListener('click', () =>{bt2.className = "btn btnActivo"; bt1.className = "btn btnDesactivo"; divk.style.display = "inline"});
+    var divcesar = document.getElementById("divcesar");
+    var divcesarM = document.getElementById("divcesarM");
+    divcesarM.style.display = 'none';
+    bt1.addEventListener('click', () =>{bt1.className = "btn btnActivo"; bt2.className = "btn btnDesactivo"; divcesarM.style.display = "none";divcesar.style.display = "inline"});
+    bt2.addEventListener('click', () =>{bt2.className = "btn btnActivo"; bt1.className = "btn btnDesactivo"; divcesarM.style.display = "inline", divcesar.style.display = "none"});
 }
 
 
 var cesar = cesar || (function(){
     //una funcion que no tiene nombre, porque le da penita
     
+    var cifrarM = function(txt, k){
+        var palabra = [];
+        var pcifrada = [];
+        var abc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
+        'k', 'l', 'm', 'n','ñ', 'o', 'p', 'q', 'r', 's', 't', 'u',  'v', 'w', 'x',
+        'y', 'z'];
+        for(var i=0; i<txt.length; i++){
+            var l = abc.length;
+            var c = txt.charAt(i);
+            if(c == " "){
+                pcifrada[i] = " ";
+            }else{
+                var p = abc.indexOf(c.toLowerCase());
+                var pos = p;
+                palabra[i] = (pos + k) % l;
+                console.log(palabra[i]);
+                pcifrada[i] = abc[palabra[i]];
+            }
+        }
+        return pcifrada.join('');
+        //return palabra;
+    }
+
+    var descifrarM = function(txt, k){
+        var palabra = [];
+        var pcifrada = [];
+        var abc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
+        'k', 'l', 'm', 'n','ñ', 'o', 'p', 'q', 'r', 's', 't', 'u',  'v', 'w', 'x',
+        'y', 'z'];
+        for(var i=0; i<txt.length; i++){
+            var l = abc.length;
+            var c = txt.charAt(i);
+            if(c == " "){
+                pcifrada[i] = " ";
+            }else{
+                var p = abc.indexOf(c.toLowerCase());
+                var pos = p;
+                palabra[i] = (pos - k) % l;
+                if(palabra[i] < 0){
+                    palabra[i] = l + palabra[i] ;
+                } 
+                console.log(palabra[i]);
+                pcifrada[i] =  abc[palabra[i]]
+            }
+        }
+        return pcifrada.join('');
+        //return palabra;
+    }
+
     //funcion para la operacion del cifrado
     //texto, desp, accion
     var doStaff = function(txt, desp, action){
@@ -73,6 +123,12 @@ var cesar = cesar || (function(){
             },
             decode : function(txt, desp){
                 return doStaff(txt, desp, false);
+            },
+            encodem: function(txt, desp){
+                return cifrarM(txt, desp);
+            },
+            decodem: function(txt, desp){
+                return descifrarM(txt, desp);
             }
         };
 })();
@@ -80,13 +136,63 @@ var cesar = cesar || (function(){
 //voy a crear mis funciones de cifrado
 
 function codificar(){
-    document.getElementById('resultado').innerHTML = cesar.encode(
-        document.getElementById('cadena').value, 3
-    );
+    var desp = parseInt(document.getElementById('valorDesp').value);
+    var cadena = document.getElementById('cadena').value;
+    console.log(typeof(desp));
+    if(isNaN(desp)){
+        alert("ingresa bien el desplazamiento");
+    }else if(desp > 28 || desp<0){
+       alert("debe ser un numero entre 1 y 28")
+    }else if(cadena === ""){
+        alert("Ingresa la cadena que quieres cifrar");
+    }else{
+        document.getElementById('resultado').innerHTML = cesar.encode(
+            cadena, desp
+        );
+    }
 }
 
 function decodificar(){
-    document.getElementById('resultado').innerHTML = cesar.decode(
-        document.getElementById('cadena').value, 3
-    );
+    var desp =  parseInt(document.getElementById('valorDesp').value);
+    var cadena = document.getElementById('cadena').value;
+    if(isNaN(desp)){
+        alert("ingresa bien el desplazamiento");
+    }else if(desp > 28 || desp<0){
+       alert("debe ser un numero entre 1 y 28")
+    }else if(cadena === ""){
+        alert("Ingresa la cadena que quieres cifrar");
+    }else{
+        document.getElementById('resultado').innerHTML = cesar.decode(
+            cadena, desp
+        );
+    }
+}
+
+function codificarMejorado(){
+    var k = parseInt(document.getElementById('valorDesp').value);
+    var cadena = document.getElementById('cadena').value;
+    if(isNaN(k)){
+        alert("ingresa el campo de desplazamiento")
+    }else if(k > 28 || k<0){
+        alert("debe ser un numero entre 1 y 28")
+    }else if(cadena === ""){
+        alert("Ingresa la cadena que quieres cifrar");
+    }else{
+        document.getElementById('resultado').innerHTML = cesar.encodem(cadena, k);
+    }
+    
+}
+
+function decodificarMejorado(){
+    var k = parseInt(document.getElementById('valorDesp').value);
+    var cadena = document.getElementById('cadena').value;
+    if(isNaN(k)){
+        alert("ingresa el campo de desplazamiento")
+    }else if(k > 28 || k<0){
+        alert("debe ser un numero entre 1 y 28")
+    }else if(cadena === ""){
+        alert("Ingresa la cadena que quieres cifrar");
+    }else{
+        document.getElementById('resultado').innerHTML = cesar.decodem(cadena, k);
+    }
 }

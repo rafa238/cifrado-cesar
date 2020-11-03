@@ -14,19 +14,19 @@
             <button type="button" id="cesarM" class="btn btnDesactivo">Cesar Mejorado</button>
             <label>Desplazamiento:</label>
             <input type="number" id="valorDesp" class="input">
-            <div id="divk">
-                <label>Ingresa el valor k:</label>
-                <input type="number" id="valork" class="input">
-            </div>
         </div>
 
         <div class="container">
             <div id="principal"> 
                 <p>Texto a Cifrar / Descifrar</p>
                 <textarea id="cadena" class="input"></textarea>
-                <div class="tabs"> 
+                <div class="tabs" id="divcesar"> 
                     <input type="button" value="Cifrar" onclick="codificar()" class="btn btnActivo" >
                     <input type="button" value="Decifrar" onclick="decodificar()" class="btn btnActivo" > 
+                </div>
+                <div class="tabs" id="divcesarM"> 
+                    <input type="button" value="CifrarM" onclick="codificarMejorado()" class="btn btnActivo" >
+                    <input type="button" value="DecifrarM" onclick="decodificarMejorado()" class="btn btnActivo" > 
                 </div>
             </div>
             <div id="lateral" >
